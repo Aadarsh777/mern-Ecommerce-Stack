@@ -41,9 +41,8 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   const resultPerPage = 8;
   const productsCount = await Product.countDocuments();
 
-  const apiFeature = new ApiFeatures(Product.find(), req.query)
-    .search()
-    .filter();
+  const apiFeature = new ApiFeatures(Product.find(), req.query).search().filter();
+
   let products = await apiFeature.query;
   let filteredProductsCount = products.length;
   apiFeature.pagination(resultPerPage);
@@ -94,10 +93,8 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
         url: result.secure_url,
       });
     }
-  req.body.images = imagesLinks;
-
+    req.body.images = imagesLinks;
   }
-
 
   product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -224,7 +221,15 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   reviews.forEach((rev) => {
     avg += rev.rating;
   });
-  const ratings = avg / reviews.length;
+
+  let ratings = 0;
+
+  if(reviews.length === 0) {
+    ratings = 0;
+  } else {
+   ratings = avg / reviews.length;
+  }
+
 
   const numOfReviews = reviews.length;
 

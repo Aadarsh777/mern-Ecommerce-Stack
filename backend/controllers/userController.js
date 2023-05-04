@@ -244,7 +244,7 @@ exports.updateuserRole = catchAsyncErrors(async (req, res, next) => {
     role: req.body.role
   }
 
-  const user = await User.findById(req.params.id);
+  let user = await User.findById(req.params.id);
 
   if(!user) {
     return next(new ErrorHandler(`User does not exist with id: ${req.params.id}, 400`));
@@ -257,7 +257,7 @@ exports.updateuserRole = catchAsyncErrors(async (req, res, next) => {
   });
 
   res.status(200).json({
-    success: true,
+    success: true
   });
 });
 

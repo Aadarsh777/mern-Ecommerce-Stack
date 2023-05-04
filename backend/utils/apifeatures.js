@@ -12,7 +12,7 @@ class ApiFeatures {
             // case insensitive
 
          }
-      } : {}    
+      } : {};    
       this.query = this.query.find({...keyword});
       return this; 
    }
